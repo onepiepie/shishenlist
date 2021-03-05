@@ -1,0 +1,341 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body{
+   font-size: 20px;
+   min-width: 960px;
+   height: 100%;
+   width: 100%;
+   background-color: bisque;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#root, #root .showall {
+  height: 100%;
+  min-height: 468.5px;
+}
+
+.listindex {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: url("./assets/list_background.jpg") no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.listindex .left {
+  width: 30%;
+}
+
+.listindex .left .logo {
+  display: flex;
+  flex-direction: row;
+  padding-left: 20%;
+  padding-top: 10%;
+  justify-content: space-around;
+}
+
+.listindex .left .logo .name_logo, .listindex .left .logo .a_logo {
+  width: 40%;
+}
+
+.listindex img {
+  width: 100%;
+}
+
+.listindex .left .levelchoose {
+  width: 2.5em;
+  position: relative;
+  left: 70%;
+  text-align: center;
+  margin-top: 10%;
+  font-size: 24px;
+}
+
+.listindex .content {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  flex-wrap: wrap;
+  margin: 5%;
+  height: 80%;
+  overflow-y: scroll;
+}
+
+.listindex .content .hero_info {
+  width: 15%;
+  margin-top: 2%;
+  margin-right: 5%;
+  font-size: 16px;
+}
+
+.listindex .content .hero_info:hover {
+  background: rgb(207, 197, 197);
+  opacity: 0.7;
+}
+
+.herochoose {
+  font-weight: 700;
+  color: black;
+}
+
+.highlight {
+  color: rgb(196, 130, 55);
+  text-shadow: 2px 2px 4px #000;
+}
+
+.hide {
+  display: none;
+}
+
+.topbar {
+  width: 100%;
+  height: 34.7rem;
+  min-height: 347px;
+  position: relative;
+  background: url("./assets/top_background.jpg") no-repeat;
+  background-size: 100% auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.topbar .left .dark {
+  position: absolute;
+  width: 20%;
+  height: 100%;
+  background: black;
+  opacity: 0.3;
+  z-index: 1;
+}
+
+.topbar .left {
+  width: 20%;
+  flex-grow: 1;
+}
+
+.topbar .left .logo {
+  position: relative;
+  width: 25%;
+  flex-grow: 1;
+  z-index: 2;
+  left: 15%;
+  top: 7.5%;
+}
+
+.topbar .left .logo a {
+  width: 100%;
+}
+
+.topbar .left .logo a img {
+  width: 100%;
+}
+
+.topbar .left .logo .name_logo {
+  width: 200%;
+  position: absolute;
+  left: 80%;
+  top: 27%;
+}
+
+.topbar .left .logo .name_logo img{
+  width: 100%;
+}
+
+.topbar .content {
+  flex-grow: 4;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+}
+
+.topbar .content .info {
+  background: url("./assets/name_level.png") 100%;
+  background-size: 100% 100%;
+  width: 5%;
+  height: 50%;
+  margin-top: 10%;
+  margin-left: 18%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+
+}
+
+.topbar .content .info .name {
+ font-weight: 700;
+ writing-mode: vertical-lr;
+ text-align: center;
+ margin: 0 auto;
+ letter-spacing: 3px;
+}
+
+.topbar .content .info .level {
+  color: rgb(223, 183, 52);
+  text-shadow: 2px 2px 4px black;
+  font-weight: 1000;
+  font-size: 32px;
+  font-style: oblique;
+  position: absolute;
+  bottom: -5%;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.topbar .content .shishen_big_beforeAwake {
+  height: 100%;
+}
+
+.topbar .content .shishen_big_beforeAwake img{
+  height: 100%;
+}
+
+.story {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5%;
+}
+
+.story .title, .heroattrinfo .title {
+  font-size: 34px;
+  font-weight: 700;
+  writing-mode: horizontal-tb;
+  text-align: center;
+  margin: 0 auto;
+  padding-left: 2.5%;
+  letter-spacing: 3px;
+  width: min-content;
+}
+
+.story .content {
+  display: flex;
+  flex-direction: column;
+  padding: 0 5% 0 2.5%;
+}
+
+.story .content .text {
+  border: 2px solid black;
+  border-top: none;
+  padding: 2%;
+  text-indent: 2em;
+}
+
+.story .content .choose {
+  display: flex;
+  flex-direction: row;
+}
+
+.story .content .choose .voice .mp3 {
+  height: 75%;
+}
+
+.story .content .choose .voice .mp3 img {
+  height: 100%;
+  margin-left: 5px;
+}
+
+.story .content .choose .voice {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.story .content .choose > div {
+  text-align: center;
+  border: 2px solid black;
+  border-left: none;
+  flex-grow: 1;
+  align-items: center;
+  line-height: 30px;
+  height: 30px;
+}
+
+.story .content .choose:first-child {
+  border-left: 2px solid black;
+}
+
+.story .content .choose .choosen {
+  background: rgb(196, 130, 55);
+}
+
+.heroattrinfo .content {
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  margin: 0 5% 0 2.5%;
+  padding: 2%;
+  border: 2px solid black;
+}
+
+.heroattrinfo {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5%;
+}
+
+.heroattrinfo .content > div {
+  flex-grow: 1;
+  margin: 0 5%;
+  text-align: center;
+  width: 33%;
+}
+
+.heroattrinfo .content > div p {
+  border-bottom: 1px dashed black;
+  line-height: 34px;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: space-evenly;
+  padding: 0 10px;
+}
+
+.heroattrinfo .content > div img {
+  border: 1px solid black;
+  padding: 5px;
+  margin: 0 auto;
+  width: 50%;
+}
+
+.heroattrinfo .content > div p span {
+  width: 40%;
+}
+
+.heroattrinfo .content > div p:nth-child(-n+6) span:first-child{
+  width: 5%;
+}
+
+.heroattrinfo .content .not_visible {
+  visibility: hidden;
+}
+
+.heroattrinfo .content .attr_name {
+  text-align: center;
+}
+
+.heroattrinfo .content .noawake {
+  display: flex;
+  flex-direction: column;
+}
