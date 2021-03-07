@@ -160,6 +160,7 @@ class Attr extends React.Component {
             </div>
             <div className="content">
               <div className="attr_name">
+                <div className="not_visible awake_text">觉醒前</div>
                 <img className="not_visible" src={"https://yys.res.netease.com/pc/zt/20161108171335/data/before_awake/"+this.props.heroid+".jpg?v4"} alt=""/>
                 <p>攻击</p>
                 <p>生命</p>
@@ -171,25 +172,26 @@ class Attr extends React.Component {
                 <p>效果抵抗</p>
               </div>
               <div className="awake_before">
+                <div className="awake_text">觉醒前</div>
                 <img src={"https://yys.res.netease.com/pc/zt/20161108171335/data/before_awake/"+this.props.heroid+".jpg?v4"} alt=""/>
                 <p>
-                  <span>{attr_level[attr_awake_before.score.attack]}</span>
+                  <span className={attr_level[attr_awake_before.score.attack]}>{attr_level[attr_awake_before.score.attack]}</span>
                   <span>{"(" + Math.round(attr_awake_before.attack) + ")"}</span>
                 </p>
                 <p>
-                  <span>{attr_level[attr_awake_before.score.maxHp]}</span>
+                  <span className={attr_level[attr_awake_before.score.maxHp]}>{attr_level[attr_awake_before.score.maxHp]}</span>
                   <span>{"(" + Math.round(attr_awake_before.maxHp) + ")"}</span>
                 </p>
                 <p>
-                  <span>{attr_level[attr_awake_before.score.defense]}</span>
+                  <span className={attr_level[attr_awake_before.score.defense]}>{attr_level[attr_awake_before.score.defense]}</span>
                   <span>{"(" + Math.round(attr_awake_before.defense) + ")"}</span>
                 </p>
                 <p>
-                  <span>{attr_level[attr_awake_before.score.speed]}</span>
+                  <span className={attr_level[attr_awake_before.score.speed]}>{attr_level[attr_awake_before.score.speed]}</span>
                   <span>{"(" + attr_awake_before.speed + ")"}</span>
                 </p>
                 <p>
-                  <span>{attr_level[attr_awake_before.score.critRate]}</span>
+                  <span className={attr_level[attr_awake_before.score.critRate]}>{attr_level[attr_awake_before.score.critRate]}</span>
                   <span>{"(" + attr_awake_before.critRate * 100 + "%)"}</span>
                 </p>
                 <p>
@@ -204,29 +206,30 @@ class Attr extends React.Component {
               </div>
               {attr_awake_after.length !== 1 ?
               <div className="awake_after">
+                <div className="awake_text">觉醒后</div>
                 <img src={"https://yys.res.netease.com/pc/zt/20161108171335/data/after_awake/"+this.props.heroid+".jpg?v5"} alt=""/>
                 <p>
-                  <span>{attr_level[attr_awake_after.score.attack]}</span>
+                  <span className={attr_level[attr_awake_after.score.attack]}>{attr_level[attr_awake_after.score.attack]}</span>
                   <span>{"(" + Math.round(attr_awake_after.attack) + ")"}</span>
                   <span>{"(+" + Math.round(attr_awake_after.attack - attr_awake_before.attack) + ")"}</span>
                 </p>
                 <p>
-                  <span>{attr_level[attr_awake_after.score.maxHp]}</span>
+                  <span className={attr_level[attr_awake_after.score.maxHp]}>{attr_level[attr_awake_after.score.maxHp]}</span>
                   <span>{"(" + Math.round(attr_awake_after.maxHp) + ")"}</span>
                   <span>{"(+" + Math.round(attr_awake_after.maxHp - attr_awake_before.maxHp) + ")"}</span>
                 </p>
                 <p>
-                  <span>{attr_level[attr_awake_after.score.defense]}</span>
+                  <span className={attr_level[attr_awake_after.score.defense]}>{attr_level[attr_awake_after.score.defense]}</span>
                   <span>{"(" + Math.round(attr_awake_after.defense) + ")"}</span>
                   <span>{"(+" + Math.round(attr_awake_after.defense - attr_awake_before.defense) + ")"}</span>
                 </p>
                 <p>
-                  <span>{attr_level[attr_awake_after.score.speed]}</span>
+                  <span className={attr_level[attr_awake_after.score.speed]}>{attr_level[attr_awake_after.score.speed]}</span>
                   <span>{"(" + attr_awake_after.speed + ")"}</span>
                   <span>{"(+" + Math.round(attr_awake_after.speed - attr_awake_before.speed) + ")"}</span>
                 </p>
                 <p>
-                  <span>{attr_level[attr_awake_after.score.critRate]}</span>
+                  <span className={attr_level[attr_awake_after.score.critRate]}>{attr_level[attr_awake_after.score.critRate]}</span>
                   <span>{"(" + attr_awake_after.critRate * 100 + "%)"}</span>
                   <span>{"(+" + (Math.round(attr_awake_after.critRate *100 - attr_awake_before.critRate * 100)) + "%)"}</span>
                 </p>
@@ -245,6 +248,7 @@ class Attr extends React.Component {
               </div>  
               :
               <div className="noawake">
+                <div className="not_visible">觉醒后</div>
                 <img className="not_visible" src={"https://yys.res.netease.com/pc/zt/20161108171335/data/before_awake/"+this.props.heroid+".jpg?v4"} alt=""/>
                 <p>该式神不能觉醒</p>
               </div>}
@@ -311,6 +315,12 @@ class TopBar extends React.Component {
     })
   }
 
+  return(e) {
+    this.setState({
+      heroidchoose: false
+    });
+  }
+
   render() {
     const heroinfo = this.state.heroinfo;
     const heroidlist = this.state.heroidlist;
@@ -362,9 +372,7 @@ class TopBar extends React.Component {
           <div className="topbar">
           {/** 最左边的信息，logo */}
           <div className="left">
-            <div className="dark">
-
-            </div>
+            <div className="dark"></div>
             <div className="search_bar">
 
             </div>
@@ -390,9 +398,8 @@ class TopBar extends React.Component {
         </div>
           <Story heroid={heroinfo[0]}/>
           <Attr heroid={heroinfo[0]} level={heroinfo[2]}/>
-
           <div className="allhero">
-            <div className="return  ">返回式神录</div>
+            <div className="return" onClick={this.return.bind(this)}>返回式神录</div>
           </div>
         </>
         }

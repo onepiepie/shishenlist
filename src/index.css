@@ -302,6 +302,10 @@ code {
   width: 33%;
 }
 
+.heroattrinfo .content > div > .awake_text {
+  margin-bottom: 5px;
+}
+
 .heroattrinfo .content > div p {
   border-bottom: 1px dashed black;
   line-height: 34px;
@@ -310,6 +314,7 @@ code {
   text-align: center;
   justify-content: space-evenly;
   padding: 0 10px;
+  margin-top: 5px;
 }
 
 .heroattrinfo .content > div img {
@@ -323,9 +328,31 @@ code {
   width: 40%;
 }
 
-.heroattrinfo .content > div p:nth-child(-n+6) span:first-child{
+.heroattrinfo .content > div p:nth-child(-n+7) span:first-child{
   width: 5%;
+  font-weight: 700;
 }
+
+.heroattrinfo .content > div p:nth-child(-n+7) .S, .heroattrinfo .content > div p:nth-child(-n+7) .S{
+  color: #e78f37;
+}
+
+.heroattrinfo .content > div p:nth-child(-n+7) .A {
+  color: #b250f1;
+}
+
+.heroattrinfo .content > div p:nth-child(-n+7) .B {
+  color: #089dd0;
+}
+
+.heroattrinfo .content > div p:nth-child(-n+7) .C {
+  color: #3ace2d;
+}
+
+.heroattrinfo .content > div p:nth-child(-n+7) .D {
+  color: #89888b;
+}
+
 
 .heroattrinfo .content .not_visible {
   visibility: hidden;
@@ -338,4 +365,19 @@ code {
 .heroattrinfo .content .noawake {
   display: flex;
   flex-direction: column;
+}
+
+.allhero {
+  width: 20%;
+  text-align: center;
+  padding: 5% 0;
+  margin: 0 auto;
+  font-weight: 700;
+}
+
+.allhero .return {
+  border: 2px solid rgb(196, 130, 55);
+  padding: 5% 0%;
+  border-radius: 5px;
+  background: rgb(196, 130, 55);
 }
