@@ -270,7 +270,10 @@ class TopBar extends React.Component {
       activity: "全部",
       heroname: "",
       herolevel: "",
+      len: 0
     }
+    this.oldScrollTop = 0;
+    this.imgonload = this.imgonload.bind(this);
   }
 
   componentDidMount() {
@@ -294,7 +297,9 @@ class TopBar extends React.Component {
       console.log(response.data);
       this.setState({
         heroidlist: response.data
-      })
+      });
+      /* 调用api获得数据后加载图片 */
+      this.imgonload(500);
     }).catch((error) => {
       console.log(error);
     })
@@ -319,6 +324,50 @@ class TopBar extends React.Component {
     this.setState({
       heroidchoose: false
     });
+  }
+
+  /* 图片懒加载 */
+  imgonload(top) {
+    console.log(this)
+    const len = this.state.len;
+    let temp = 0;
+    /* 获取所有要设置懒加载的图片标签 */
+    let img = document.getElementsByClassName("img_lazy");
+    /* 进行img标签的src的更改 */
+    for (let i = len; i < img.length; i++) {
+      if(img[i].offsetTop <= top){
+        img[i].src = "https://yys.res.netease.com/pc/zt/20161108171335/data/shishen/" + img[i].id + ".png";
+        temp = i;
+      }
+    }
+    this.setState({
+      len: temp
+    })
+  }
+  
+  /* 函数防抖 用户停止操作之后触发*/
+  debounce(fn, top) {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      fn(top);
+    }, 300);
+  }
+
+  onScroll(e) {
+    /* top为 已经滚动的高度 */
+    let top = e.target.scrollTop + e.target.clientHeight;
+    /* 将滚动条下拉距离大于200px则自动加载，但小于500则防抖加载*/
+    if (e.target.scrollTop - this.oldScrollTop > 200) {
+      console.log("onScroll" + this);
+      this.imgonload(top);
+      this.oldScrollTop = e.target.scrollTop;
+      /* 如果上拉，因为已经加载过图片了，不操作 */
+    } else if (e.target.scrollTop - this.oldScrollTop < 0) {
+      return;
+    }
+    else {
+      this.debounce(this.imgonload, top);
+    }
   }
 
   render() {
@@ -352,7 +401,7 @@ class TopBar extends React.Component {
               <HeroChoose level="N" activity={activity} Changelevel={this.Changelevel.bind(this)}/>
             </div>
           </div>
-          <div className="content">
+          <div className="content" onScroll={this.onScroll.bind(this)}>
             {heroidlist.map((item, index) => {
               const info = [item.id,item.name,item.level]
               return (
@@ -360,7 +409,7 @@ class TopBar extends React.Component {
                                (activity === "联动" && item.interactive === true) ? "hero_info" :
                                (activity === "全部") ? "hero_info" : "hide"} key={item.id + item.name}
                      onClick={this.heroid.bind(this, info)}>
-                  <img src={heroimg + item.id + png} alt=""/>
+                  <img className="img_lazy" id={item.id} src={require("./assets/loading.png").default} alt=""/>
                   <div className="hero_name">{item.name}</div>
                 </div>
               )

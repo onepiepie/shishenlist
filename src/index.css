@@ -85,7 +85,8 @@ code {
   width: 15%;
   margin-top: 2%;
   margin-right: 5%;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .listindex .content .hero_info:hover {
@@ -179,7 +180,6 @@ code {
   flex-direction: column;
   justify-content: center;
   position: relative;
-
 }
 
 .topbar .content .info .name {
