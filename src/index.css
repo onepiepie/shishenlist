@@ -169,20 +169,28 @@ code {
   flex-direction: row;
 }
 
+
+.topbar .content .hide {
+  visibility: hidden;
+}
+
+.topbar .content .info:first-child {
+  margin-left: 5%;
+}
+
 .topbar .content .info {
   background: url("./assets/name_level.png") 100%;
   background-size: 100% 100%;
   width: 5%;
   height: 50%;
-  margin-top: 10%;
-  margin-left: 18%;
+  margin: 10% 5% 0 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
 }
 
-.topbar .content .info .name {
+.topbar .content .info .name, .topbar .content .info .skin_name {
  font-weight: 700;
  writing-mode: vertical-lr;
  text-align: center;
@@ -198,17 +206,41 @@ code {
   font-style: oblique;
   position: absolute;
   bottom: -5%;
-  width: 100%;
+  width: 200%;
   text-align: center;
   letter-spacing: 1px;
+  transform: translateX(-20%);
 }
 
 .topbar .content .shishen_big_beforeAwake {
   height: 100%;
+  width: 50%;
+  position: relative;
 }
 
-.topbar .content .shishen_big_beforeAwake img{
+.topbar .content .shishen_big_beforeAwake > img {
   height: 100%;
+  position: absolute;
+}
+
+.topbar .content .shishen_big_beforeAwake .big_choose {
+  position: absolute;
+  bottom: 0%;
+  width: 30%;
+  right: -40%;
+  text-align: center;
+  height: 100%;
+}
+
+.topbar .content .shishen_big_beforeAwake .big_choose > div {
+  width: 100%;
+  position: absolute;
+  bottom: 0%;
+  display: flex;
+}
+
+.topbar .content .shishen_big_beforeAwake .big_choose > div img {
+  width: 100%;
 }
 
 .story {

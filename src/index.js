@@ -38,7 +38,6 @@ class Story extends React.Component {
 
   componentDidMount() {
     axios.get("/api02/get_hero_story?heroid=" + this.props.heroid).then((response) => {
-      console.log(response.data);
       this.setState({
         story: response.data
       })
@@ -73,7 +72,6 @@ class Story extends React.Component {
     const story = this.state.story;
     const audioplay = this.state.audioplay;
     const activity = this.state.activity;
-    console.log(this.state.story)
     return (
       <React.Fragment>
       {story.length === 0 ? null :
@@ -123,7 +121,6 @@ class Attr extends React.Component {
 
   componentDidMount() {
     axios.get("/api02/get_hero_attr?heroid="+ this.props.heroid+"&awake=0&level=1&star=2").then((response) => {
-      console.log(response.data.data);
       this.setState({
         attr_awake_before: response.data.data
       })
@@ -133,7 +130,6 @@ class Attr extends React.Component {
 
     if (this.props.level !== "SP"){
       axios.get("/api02/get_hero_attr?heroid="+ this.props.heroid+"&awake=1&level=1&star=2").then((response) => {
-        console.log(response.data.data);
         this.setState({
           attr_awake_after: response.data.data
         })
@@ -270,7 +266,9 @@ class TopBar extends React.Component {
       activity: "全部",
       heroname: "",
       herolevel: "",
-      len: 0
+      len: 0,
+      bigchoose: [true, false, false],
+      skin_choose: 1
     }
     this.oldScrollTop = 0;
     this.imgonload = this.imgonload.bind(this);
@@ -293,8 +291,7 @@ class TopBar extends React.Component {
       })(document,window);
 
     /** 调用api接口获取数据 */
-    axios.get("/api/pc/gw/20180913151832/js/app/shishen.json?v=38").then((response) => {
-      console.log(response.data);
+    axios.get("/api/pc/zt/20161108171335/js/app/all_shishen.json?v69").then((response) => {
       this.setState({
         heroidlist: response.data
       });
@@ -310,10 +307,35 @@ class TopBar extends React.Component {
     this.setState({
       activity: e
     })
+    this.imgonload(20000);
+  }
+
+  bigchoose(e) {
+    const bigchoose = e;
+    const heroinfo = this.state.heroinfo;
+    const skin_choose = this.state.skin_choose;
+    console.log(heroinfo[3])
+    if (heroinfo[3]===null) {
+      console.log("没有皮")
+      return
+    }
+    if (heroinfo[3].length >= 2){
+      if (skin_choose === heroinfo[3].length) {
+        this.setState({
+          skin_choose: 1
+        })
+      } else {
+        this.setState({
+          skin_choose: skin_choose + 1
+        })
+      }
+    }
+    this.setState({
+      bigchoose: bigchoose
+    })
   }
 
   heroid(e) {
-    console.log(e);
     this.setState({
       heroidchoose: true,
       heroinfo: e
@@ -328,7 +350,6 @@ class TopBar extends React.Component {
 
   /* 图片懒加载 */
   imgonload(top) {
-    console.log(this)
     const len = this.state.len;
     let temp = 0;
     /* 获取所有要设置懒加载的图片标签 */
@@ -358,7 +379,6 @@ class TopBar extends React.Component {
     let top = e.target.scrollTop + e.target.clientHeight;
     /* 将滚动条下拉距离大于200px则自动加载，但小于500则防抖加载*/
     if (e.target.scrollTop - this.oldScrollTop > 200) {
-      console.log("onScroll" + this);
       this.imgonload(top);
       this.oldScrollTop = e.target.scrollTop;
       /* 如果上拉，因为已经加载过图片了，不操作 */
@@ -375,9 +395,10 @@ class TopBar extends React.Component {
     const heroidlist = this.state.heroidlist;
     const heroidchoose = this.state.heroidchoose;
     const activity = this.state.activity;
-    const heroimg = "https://yys.res.netease.com/pc/zt/20161108171335/data/shishen/"
-    const png = ".png" 
+    const skin_choose = this.state.skin_choose;
+    const bigchoose = this.state.bigchoose;
     const shishen_big_beforeAwake = "https://yys.res.netease.com/pc/zt/20161108171335/data/shishen_big_beforeAwake/"+heroinfo[0]+".png?v6"
+    const shishen_big_afterAwake = "https://yys.res.netease.com/pc/zt/20161108171335/data/shishen_big_afterAwake/"+heroinfo[0]+".png?v6"
     return (
       <div className="showall">
         {!heroidchoose ? 
@@ -403,7 +424,7 @@ class TopBar extends React.Component {
           </div>
           <div className="content" onScroll={this.onScroll.bind(this)}>
             {heroidlist.map((item, index) => {
-              const info = [item.id,item.name,item.level]
+              const info = [item.id,item.name,item.level,item.skin]
               return (
                 <div className={activity === item.level ? "hero_info" : 
                                (activity === "联动" && item.interactive === true) ? "hero_info" :
@@ -438,11 +459,44 @@ class TopBar extends React.Component {
           <div className="content">
             <div className="info">
               <div className="name">{heroinfo[1]}</div>
-              <div className="level">{heroinfo[2]}</div>
+              <div className="level">{heroinfo[2]}</div>             
+            </div>
+            <div className={(heroinfo[3] !== null && !bigchoose[2]) ? "info hide" : "info"}>
+              <div className="skin_name">{heroinfo[3][skin_choose-1].name}</div>  
             </div>
             <div className="shishen_big_beforeAwake">
+              {bigchoose[0] ? 
               <img src={shishen_big_beforeAwake} alt=""/>
-            </div> 
+              :
+              (bigchoose[1]) ?
+              <img src={shishen_big_afterAwake} alt=""/>
+              :
+              (bigchoose[2]) && heroinfo[3] !== null ?
+              heroinfo[3].map((item, index) => {
+                return (
+                  skin_choose === (index+1) ? 
+                  <img key={item.name} src={"https://yys.res.netease.com/pc/zt/20161108171335/data/shishen_skin/"+heroinfo[0]+"-"+skin_choose+".png"} alt=""/>
+                  : null
+                )
+              }):null}
+              <div className="big_choose">
+                {bigchoose[0] ? 
+                  <img src={require("./assets/chushi_click.png").default} alt=""/>
+                : 
+                  <img onClick={this.bigchoose.bind(this, [true, false, false])} src={require("./assets/chushi_noclick.png").default} alt=""/>
+                }
+                {bigchoose[1] ? 
+                  <img src={require("./assets/juexing_click.png").default} alt=""/>
+                : 
+                  <img onClick={this.bigchoose.bind(this, [false, true, false])} src={require("./assets/juexing_noclick.png").default} alt=""/>
+                }
+                {bigchoose[2] ? 
+                  <img onClick={this.bigchoose.bind(this, [false, false, true])} src={require("./assets/pifu_click.png").default} alt=""/>
+                : 
+                  <img onClick={this.bigchoose.bind(this, [false, false, true])} src={require("./assets/pifu_noclick.png").default} alt=""/>
+                }
+              </div>
+            </div>
           </div>
         </div>
           <Story heroid={heroinfo[0]}/>
