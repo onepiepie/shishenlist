@@ -314,12 +314,11 @@ class TopBar extends React.Component {
     const bigchoose = e;
     const heroinfo = this.state.heroinfo;
     const skin_choose = this.state.skin_choose;
-    console.log(heroinfo[3])
-    if (heroinfo[3]===null) {
+    if (heroinfo[3]===undefined) {
       console.log("没有皮")
       return
     }
-    if (heroinfo[3].length >= 2){
+    if (heroinfo[3] !== undefined && heroinfo[3] !== null && heroinfo[3].length >= 2) {
       if (skin_choose === heroinfo[3].length) {
         this.setState({
           skin_choose: 1
@@ -461,9 +460,11 @@ class TopBar extends React.Component {
               <div className="name">{heroinfo[1]}</div>
               <div className="level">{heroinfo[2]}</div>             
             </div>
-            <div className={(heroinfo[3] !== null && !bigchoose[2]) ? "info hide" : "info"}>
-              <div className="skin_name">{heroinfo[3][skin_choose-1].name}</div>  
+            {(heroinfo[3] !== undefined && heroinfo[3] !== null) ? 
+            <div className={(heroinfo[3] !== undefined && !bigchoose[2]) ? "info hide" : "info"}>
+              <div className="skin_name">{heroinfo[3][skin_choose-1].name}</div> 
             </div>
+            : null}
             <div className="shishen_big_beforeAwake">
               {bigchoose[0] ? 
               <img src={shishen_big_beforeAwake} alt=""/>
@@ -488,12 +489,12 @@ class TopBar extends React.Component {
                 {bigchoose[1] ? 
                   <img src={require("./assets/juexing_click.png").default} alt=""/>
                 : 
-                  <img onClick={this.bigchoose.bind(this, [false, true, false])} src={require("./assets/juexing_noclick.png").default} alt=""/>
+                  <img onClick={heroinfo[2]!=="SP" ? this.bigchoose.bind(this, [false, true, false]) : null} src={require("./assets/juexing_noclick.png").default} alt=""/>
                 }
                 {bigchoose[2] ? 
                   <img onClick={this.bigchoose.bind(this, [false, false, true])} src={require("./assets/pifu_click.png").default} alt=""/>
                 : 
-                  <img onClick={this.bigchoose.bind(this, [false, false, true])} src={require("./assets/pifu_noclick.png").default} alt=""/>
+                  <img onClick={heroinfo[3]!==undefined && heroinfo[3]!==null ?this.bigchoose.bind(this, [false, false, true]) : null} src={require("./assets/pifu_noclick.png").default} alt=""/>
                 }
               </div>
             </div>
