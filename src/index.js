@@ -46,6 +46,20 @@ class Story extends React.Component {
     })
   }
 
+  componentDidUpdate(prevprops,prevstate) {
+    if (this.props !== prevprops) {
+      axios.get("/api02/get_hero_story?heroid=" + this.props.heroid).then((response) => {
+        this.setState({
+          story: response.data
+        })
+      }).catch((error) => {
+        console.log(error);
+      })
+    } else {
+      console.log("no update")
+    }
+  }
+
   Changestory(e) {
     this.setState({
       activity: e
@@ -140,6 +154,33 @@ class Attr extends React.Component {
       this.setState({
         attr_awake_after: ["SP can't awake!"]
       })
+    }
+  }
+
+  componentDidUpdate(prevprops,prevstate) {
+    /** 第一个参数是上一次的props，第二个参数是上一次的state */
+    if (this.props !== prevprops) {
+      axios.get("/api02/get_hero_attr?heroid="+ this.props.heroid+"&awake=0&level=1&star=2").then((response) => {
+        this.setState({
+          attr_awake_before: response.data.data
+        })
+      }).catch((error) => {
+        console.log(error);
+      })
+  
+      if (this.props.level !== "SP"){
+        axios.get("/api02/get_hero_attr?heroid="+ this.props.heroid+"&awake=1&level=1&star=2").then((response) => {
+          this.setState({
+            attr_awake_after: response.data.data
+          })
+        }).catch((error) => {
+          console.log(error);
+        })
+      } else {
+        this.setState({
+          attr_awake_after: ["SP can't awake!"]
+        })
+      }
     }
   }
 
@@ -264,8 +305,6 @@ class TopBar extends React.Component {
       heroidlist: [],
       heroidchoose: false,
       activity: "全部",
-      heroname: "",
-      herolevel: "",
       len: 0,
       bigchoose: [true, false, false],
       skin_choose: 1
@@ -389,6 +428,24 @@ class TopBar extends React.Component {
     }
   }
 
+  nexthero(e){
+    const heroidlist_item = this.state.heroidlist[e+1];
+    const info = [heroidlist_item.id,heroidlist_item.name,heroidlist_item.level,heroidlist_item.skin,e+1];
+    this.setState({
+      heroinfo: info,
+      bigchoose: [true, false, false],
+    })
+  }
+
+  prevhero(e){
+    const heroidlist_item = this.state.heroidlist[e-1];
+    const info = [heroidlist_item.id,heroidlist_item.name,heroidlist_item.level,heroidlist_item.skin,e-1];
+    this.setState({
+      heroinfo: info,
+      bigchoose: [true, false, false],
+    })
+  }
+
   render() {
     const heroinfo = this.state.heroinfo;
     const heroidlist = this.state.heroidlist;
@@ -423,7 +480,7 @@ class TopBar extends React.Component {
           </div>
           <div className="content" onScroll={this.onScroll.bind(this)}>
             {heroidlist.map((item, index) => {
-              const info = [item.id,item.name,item.level,item.skin]
+              const info = [item.id,item.name,item.level,item.skin,index];
               return (
                 <div className={activity === item.level ? "hero_info" : 
                                (activity === "联动" && item.interactive === true) ? "hero_info" :
@@ -442,9 +499,6 @@ class TopBar extends React.Component {
           {/** 最左边的信息，logo */}
           <div className="left">
             <div className="dark"></div>
-            <div className="search_bar">
-
-            </div>
             <div className="logo">
               <a href="https://yys.163.com/index.html">
                 <img src={require("./assets/yys_logo.webp").default} alt=""/>
@@ -504,6 +558,22 @@ class TopBar extends React.Component {
           <Attr heroid={heroinfo[0]} level={heroinfo[2]}/>
           <div className="allhero">
             <div className="return" onClick={this.return.bind(this)}>返回式神录</div>
+          </div>
+          <div className="changebtn">
+            <div className="nextbtn">
+                <img onClick={this.prevhero.bind(this, heroinfo[4])} src={"https://yys.res.netease.com/pc/zt/20161108171335/data/mark_btn/"+(parseInt(heroinfo[0])+1)+".png?v5"} alt=""/>
+                <div className="btn_text">
+                  {heroidlist[heroinfo[4]-1].name}
+                  <br></br>上一个
+                </div>
+            </div>
+            <div className="prevbtn">
+                <img onClick={this.nexthero.bind(this, heroinfo[4])} src={"https://yys.res.netease.com/pc/zt/20161108171335/data/mark_btn/"+(parseInt(heroinfo[0])-1)+".png?v5"} alt=""/>
+                <div className="btn_text">
+                  {heroidlist[heroinfo[4]+1].name}
+                  <br></br>下一个
+                </div>
+            </div>
           </div>
         </>
         }
