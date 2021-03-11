@@ -296,7 +296,7 @@ class TopBar extends React.Component {
         heroidlist: response.data
       });
       /* 调用api获得数据后加载图片 */
-      this.imgonload(500);
+      this.imgonload(750);
     }).catch((error) => {
       console.log(error);
     })
