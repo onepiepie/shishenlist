@@ -8,6 +8,9 @@ import './index.css';
 class HeroChoose extends React.Component {
   constructor(props) {
     super(props);
+    this.state={
+
+    };
   }
   
   onClick(props){
@@ -56,7 +59,7 @@ class Story extends React.Component {
         console.log(error);
       })
     } else {
-      console.log("no update")
+      return
     }
   }
 
@@ -142,7 +145,7 @@ class Attr extends React.Component {
       console.log(error);
     })
 
-    if (this.props.level !== "SP"){
+    if (this.props.level !== "SP" && this.props.level !== "N" ){
       axios.get("/api02/get_hero_attr?heroid="+ this.props.heroid+"&awake=1&level=1&star=2").then((response) => {
         this.setState({
           attr_awake_after: response.data.data
@@ -152,7 +155,7 @@ class Attr extends React.Component {
       })
     } else {
       this.setState({
-        attr_awake_after: ["SP can't awake!"]
+        attr_awake_after: ["SP or N can't awake!"]
       })
     }
   }
@@ -168,7 +171,7 @@ class Attr extends React.Component {
         console.log(error);
       })
   
-      if (this.props.level !== "SP"){
+      if (this.props.level !== "SP" && this.props.level !== "N" ){
         axios.get("/api02/get_hero_attr?heroid="+ this.props.heroid+"&awake=1&level=1&star=2").then((response) => {
           this.setState({
             attr_awake_after: response.data.data
@@ -560,20 +563,24 @@ class TopBar extends React.Component {
             <div className="return" onClick={this.return.bind(this)}>返回式神录</div>
           </div>
           <div className="changebtn">
-            <div className="nextbtn">
-                <img onClick={this.prevhero.bind(this, heroinfo[4])} src={"https://yys.res.netease.com/pc/zt/20161108171335/data/mark_btn/"+(parseInt(heroinfo[0])+1)+".png?v5"} alt=""/>
-                <div className="btn_text">
-                  {heroidlist[heroinfo[4]-1].name}
-                  <br></br>上一个
-                </div>
-            </div>
+            {heroinfo[4] !== 0 ?
             <div className="prevbtn">
-                <img onClick={this.nexthero.bind(this, heroinfo[4])} src={"https://yys.res.netease.com/pc/zt/20161108171335/data/mark_btn/"+(parseInt(heroinfo[0])-1)+".png?v5"} alt=""/>
-                <div className="btn_text">
-                  {heroidlist[heroinfo[4]+1].name}
-                  <br></br>下一个
-                </div>
+              <img onClick={this.prevhero.bind(this, heroinfo[4])} src={"https://yys.res.netease.com/pc/zt/20161108171335/data/mark_btn/"+(heroidlist[heroinfo[4]-1].id)+".png?v5"} alt=""/>
+              <div className="btn_text">
+                {heroidlist[heroinfo[4]-1].name}
+                <br></br>上一个
+              </div>
             </div>
+              : null}
+            {heroinfo[4] !== heroidlist.length-1 ?
+            <div className="nextbtn">
+              <img onClick={this.nexthero.bind(this, heroinfo[4])} src={"https://yys.res.netease.com/pc/zt/20161108171335/data/mark_btn/"+(heroidlist[heroinfo[4]+1].id)+".png?v5"} alt=""/>
+              <div className="btn_text">
+                {heroidlist[heroinfo[4]+1].name}
+                <br></br>下一个
+              </div>
+            </div>
+            : null}
           </div>
         </>
         }
