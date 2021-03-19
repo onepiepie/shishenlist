@@ -126,7 +126,6 @@ code {
   height: 99%;
   background: black;
   opacity: 0.3;
-  z-index: 1;
 }
 
 .topbar .left {
@@ -220,10 +219,11 @@ code {
 }
 
 .topbar .content .info .name, .topbar .content .info .skin_name {
- font-weight: 700;
- text-align: center;
- margin: 0 auto;
- line-height: 20px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 auto;
+  line-height: 20px;
+  width: 50%;
 }
 
 .topbar .content .info .level {
@@ -258,6 +258,10 @@ code {
   right: -40%;
   text-align: center;
   height: 100%;
+}
+
+.topbar .content .shishen_big_beforeAwake .big_choose img {
+  width: 80%;
 }
 
 .topbar .content .shishen_big_beforeAwake .big_choose > div {
