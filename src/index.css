@@ -221,10 +221,9 @@ code {
 
 .topbar .content .info .name, .topbar .content .info .skin_name {
  font-weight: 700;
- writing-mode: vertical-lr;
  text-align: center;
  margin: 0 auto;
- letter-spacing: 3px;
+ line-height: 20px;
 }
 
 .topbar .content .info .level {
