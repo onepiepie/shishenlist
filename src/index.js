@@ -330,7 +330,7 @@ class TopBar extends React.Component {
       })(document,window);
 
     /** 调用api接口获取数据 */
-    axios.get("/api/pc/zt/20161108171335/js/app/all_shishen.json?v69").then((response) => {
+    axios.get("http://119.45.17.173:8080/api/pc/zt/20161108171335/js/app/all_shishen.json?v69").then((response) => {
       this.setState({
         heroidlist: response.data
       });
