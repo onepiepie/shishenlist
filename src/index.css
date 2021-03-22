@@ -397,7 +397,7 @@ code {
   font-weight: 700;
 }
 
-.heroattrinfo .content > div p:nth-child(-n+7) .S, .heroattrinfo .content > div p:nth-child(-n+7) .S{
+.heroattrinfo .content > div p:nth-child(-n+7) .S {
   color: #e78f37;
 }
 
