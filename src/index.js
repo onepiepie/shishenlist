@@ -40,7 +40,7 @@ class Story extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("http://119.45.17.173:8080/api/get_hero_story?heroid=" + this.props.heroid).then((response) => {
+    axios.get("https://yys.clmystes.tech:3300/api/get_hero_story?heroid=" + this.props.heroid).then((response) => {
       this.setState({
         story: response.data
       })
@@ -51,7 +51,7 @@ class Story extends React.Component {
 
   componentDidUpdate(prevprops,prevstate) {
     if (this.props !== prevprops) {
-      axios.get("http://119.45.17.173:8080/api/get_hero_story?heroid=" + this.props.heroid).then((response) => {
+      axios.get("https://yys.clmystes.tech:3300/api/get_hero_story?heroid=" + this.props.heroid).then((response) => {
         this.setState({
           story: response.data
         })
@@ -137,7 +137,7 @@ class Attr extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("http://119.45.17.173:8080/api/get_hero_attr?heroid="+ this.props.heroid+"&awake=0&level=1&star=2").then((response) => {
+    axios.get("https://yys.clmystes.tech:3300/api/get_hero_attr?heroid="+ this.props.heroid+"&awake=0&level=1&star=2").then((response) => {
       this.setState({
         attr_awake_before: response.data.data
       })
@@ -145,8 +145,8 @@ class Attr extends React.Component {
       console.log(error);
     })
 
-    if (this.props.level !== "SP" && this.props.level !== "N" ){
-      axios.get("http://119.45.17.173:8080/api/get_hero_attr?heroid="+ this.props.heroid+"&awake=1&level=1&star=2").then((response) => {
+    if (this.props.level !== "SP"){
+      axios.get("https://yys.clmystes.tech:3300/api/get_hero_attr?heroid="+ this.props.heroid+"&awake=1&level=1&star=2").then((response) => {
         this.setState({
           attr_awake_after: response.data.data
         })
@@ -163,7 +163,7 @@ class Attr extends React.Component {
   componentDidUpdate(prevprops,prevstate) {
     /** 第一个参数是上一次的props，第二个参数是上一次的state */
     if (this.props !== prevprops) {
-      axios.get("http://119.45.17.173:8080/api/get_hero_attr?heroid="+ this.props.heroid+"&awake=0&level=1&star=2").then((response) => {
+      axios.get("https://yys.clmystes.tech:3300/api/get_hero_attr?heroid="+ this.props.heroid+"&awake=0&level=1&star=2").then((response) => {
         this.setState({
           attr_awake_before: response.data.data
         })
@@ -171,8 +171,8 @@ class Attr extends React.Component {
         console.log(error);
       })
   
-      if (this.props.level !== "SP" && this.props.level !== "N" ){
-        axios.get("http://119.45.17.173:8080/api/get_hero_attr?heroid="+ this.props.heroid+"&awake=1&level=1&star=2").then((response) => {
+      if (this.props.level !== "SP"){
+        axios.get("https://yys.clmystes.tech:3300/api/get_hero_attr?heroid="+ this.props.heroid+"&awake=1&level=1&star=2").then((response) => {
           this.setState({
             attr_awake_after: response.data.data
           })
@@ -333,7 +333,7 @@ class TopBar extends React.Component {
       })(document,window);
 
     /** 调用api接口获取数据 */
-    axios.get("https://yys.res.netease.com/pc/zt/20161108171335/js/app/all_shishen.json?v70").then((response) => {
+    axios.get("https://yys.clmystes.tech:3300/api02/pc/zt/20161108171335/js/app/all_shishen.json?v69").then((response) => {
       this.setState({
         heroidlist: response.data
       });
