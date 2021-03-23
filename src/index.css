@@ -64,7 +64,7 @@ code {
 .listindex .left .levelchoose {
   width: 2.5em;
   position: relative;
-  left: 70%;
+  left: 73%;
   text-align: center;
   margin-top: 10%;
   font-size: 24px;
@@ -126,7 +126,6 @@ code {
   height: 99%;
   background: black;
   opacity: 0.3;
-  z-index: 1;
 }
 
 .topbar .left {
@@ -162,28 +161,32 @@ code {
   width: 100%;
 }
 
-.showall .changebtn {
-  display: flex;
-  position: fixed;
-  top: 50%;
-  width: 100%;
-  justify-content: space-between;
-  z-index: 500;
-}
-
 .showall .changebtn > div {
   display: flex;
   justify-content: center;
   flex-direction: column;
   text-align: center;  
+  position: fixed;
+  top: 50%;
+  left: 0%;
   width: 5rem;
+  min-width: min-content;
+}
+
+.showall .changebtn > div:last-child {
+  position: fixed;
+  left: 100%;
+  transform: translateX(-100%);
 }
 
 .showall .changebtn > div > div {
-  position: relative;
-  bottom: 28%;
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+  height: 40%;
   text-align: center;
   margin: 0 auto;
+  margin-left: 1em;
   writing-mode: vertical-lr;
   font-size: 14px;
 }
@@ -216,11 +219,11 @@ code {
 }
 
 .topbar .content .info .name, .topbar .content .info .skin_name {
- font-weight: 700;
- writing-mode: vertical-lr;
- text-align: center;
- margin: 0 auto;
- letter-spacing: 3px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 auto;
+  line-height: 20px;
+  width: 50%;
 }
 
 .topbar .content .info .level {
@@ -238,7 +241,7 @@ code {
 }
 
 .topbar .content .shishen_big_beforeAwake {
-  height: 100%;
+  height: 99%;
   width: 50%;
   position: relative;
 }
@@ -255,6 +258,10 @@ code {
   right: -40%;
   text-align: center;
   height: 100%;
+}
+
+.topbar .content .shishen_big_beforeAwake .big_choose img {
+  width: 80%;
 }
 
 .topbar .content .shishen_big_beforeAwake .big_choose > div {
@@ -390,7 +397,7 @@ code {
   font-weight: 700;
 }
 
-.heroattrinfo .content > div p:nth-child(-n+7) .S, .heroattrinfo .content > div p:nth-child(-n+7) .S{
+.heroattrinfo .content > div p:nth-child(-n+7) .S {
   color: #e78f37;
 }
 
