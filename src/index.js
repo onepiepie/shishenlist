@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import './index.css';
+import {domainname, storyChooseText, website, attr} from './const.js';
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
 
@@ -19,7 +20,8 @@ class HeroChoose extends React.Component {
 
   render() {
     return(
-      <div className={this.props.level === this.props.activity ? "herochoose highlight" : "herochoose"} onClick={this.onClick.bind(this, this.props.level)}>
+      <div className={this.props.level === this.props.activity ? "herochoose highlight" : "herochoose"}
+           onClick={this.onClick.bind(this, this.props.level)}>
         {this.props.level}
       </div>
     )
@@ -39,7 +41,7 @@ class Story extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("https://yys.clmystes.tech:3300/api/get_hero_story?heroid=" + this.props.heroId).then((response) => {
+    axios.get(`${domainname}/api/get_hero_story?heroid=${this.props.heroId}`).then((response) => {
       this.setState({
         story: response.data
       })
@@ -50,7 +52,7 @@ class Story extends React.Component {
 
   componentDidUpdate(prevprops,prevstate) {
     if (this.props !== prevprops) {
-      axios.get("https://yys.clmystes.tech:3300/api/get_hero_story?heroid=" + this.props.heroId).then((response) => {
+      axios.get(`${domainname}/api/get_hero_story?heroid=${this.props.heroId}`).then((response) => {
         this.setState({
           story: response.data
         })
@@ -80,7 +82,6 @@ class Story extends React.Component {
   }
 
   render() {
-    const storyChooseText = ["一","二","三","四","五","六","七"]
     const story = this.state.story === null ? [] : this.state.story;
     const audioPlay = this.state.audioPlay;
     const activity = this.state.activity;
@@ -106,7 +107,7 @@ class Story extends React.Component {
               <div className="cv">cv:{story.data.cv}</div>
               <div className="mp3">
                 <img src={!audioPlay ? require("./assets/pause.png").default : require("./assets/play.png").default} alt=""/>
-                <audio ref={this.audio} src={"https://yys.res.netease.com/pc/zt/20161108171335/data/mp3/"+this.props.heroId+".mp3?v=5"}>您的浏览器不支持音频播放。</audio>
+                <audio ref={this.audio} src={`${website}/pc/zt/20161108171335/data/mp3/${this.props.heroId}.mp3?v=5`}>您的浏览器不支持音频播放。</audio>
               </div>
             </div>
             {story.data.story.map((item, index) => {
@@ -141,7 +142,7 @@ class Attr extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("https://yys.clmystes.tech:3300/api/get_hero_attr?heroid="+ this.props.heroId+"&awake=0&level=1&star=2").then((response) => {
+    axios.get(`${domainname}/api/get_hero_attr?heroid=${this.props.heroId}&awake=0&level=1&star=2`).then((response) => {
       this.setState({
         attrAwakeBefore: response.data.data
       })
@@ -149,7 +150,7 @@ class Attr extends React.Component {
 
     })
     if (this.props.level !== "SP" && this.props.level !== "N" && this.props.heroId !== "402"){
-      axios.get("https://yys.clmystes.tech:3300/api/get_hero_attr?heroid="+ this.props.heroId+"&awake=1&level=1&star=2").then((response) => {
+      axios.get(`${domainname}/api/get_hero_attr?heroid=${this.props.heroId}&awake=1&level=1&star=2`).then((response) => {
         this.setState({
           attrAwakeAfter: response.data.data
         })
@@ -166,7 +167,7 @@ class Attr extends React.Component {
   componentDidUpdate(prevprops,prevstate) {
     /** 第一个参数是上一次的props，第二个参数是上一次的state */
     if (this.props !== prevprops) {
-      axios.get("https://yys.clmystes.tech:3300/api/get_hero_attr?heroid="+ this.props.heroId+"&awake=0&level=1&star=2").then((response) => {
+      axios.get(`${domainname}"/api/get_hero_attr?heroid=${this.props.heroId}&awake=0&level=1&star=2"`).then((response) => {
         this.setState({
           attrAwakeBefore: response.data.data
         })
@@ -175,7 +176,7 @@ class Attr extends React.Component {
       })
   
       if (this.props.level !== "SP" && this.props.level !== "N" && this.props.heroId !== "402"){
-        axios.get("https://yys.clmystes.tech:3300/api/get_hero_attr?heroid="+ this.props.heroId+"&awake=1&level=1&star=2").then((response) => {
+        axios.get(`${domainname}/api/get_hero_attr?heroid=${this.props.heroId}&awake=1&level=1&star=2`).then((response) => {
           this.setState({
             attrAwakeAfter: response.data.data
           })
@@ -204,19 +205,18 @@ class Attr extends React.Component {
             <div className="content">
               <div className="attr_name">
                 <div className="not_visible awake_text">觉醒前</div>
-                <img className="not_visible" src={"https://yys.res.netease.com/pc/zt/20161108171335/data/before_awake/"+this.props.heroId+".jpg?v4"} alt=""/>
-                <p>攻击</p>
-                <p>生命</p>
-                <p>防御</p>
-                <p>速度</p>
-                <p>暴击</p>
-                <p>暴击伤害</p>
-                <p>效果命中</p>
-                <p>效果抵抗</p>
+                <img className="not_visible" src={`${website}/pc/zt/20161108171335/data/before_awake/${this.props.heroId}.jpg?v4`} alt=""/>
+                {attr.map((item, index) => {
+                  return (
+                    <p key={item+index}>
+                      {item}
+                    </p>
+                  )
+                })}
               </div>
               <div className="awake_before">
                 <div className="awake_text">觉醒前</div>
-                <img src={"https://yys.res.netease.com/pc/zt/20161108171335/data/before_awake/"+this.props.heroId+".jpg?v4"} alt=""/>
+                <img src={`${website}/pc/zt/20161108171335/data/before_awake/${this.props.heroId}.jpg?v4`} alt=""/>
                 <p>
                   <span className={attrLevel[attrAwakeBefore.score.attack]}>{attrLevel[attrAwakeBefore.score.attack]}</span>
                   <span>{"(" + Math.round(attrAwakeBefore.attack) + ")"}</span>
@@ -250,7 +250,7 @@ class Attr extends React.Component {
               {attrAwakeAfter.length !== 1 ?
               <div className="awake_after">
                 <div className="awake_text">觉醒后</div>
-                <img src={"https://yys.res.netease.com/pc/zt/20161108171335/data/after_awake/"+this.props.heroId+".jpg?v5"} alt=""/>
+                <img src={`${website}/pc/zt/20161108171335/data/after_awake/${this.props.heroId}.jpg?v5`} alt=""/>
                 <p>
                   <span className={attrLevel[attrAwakeAfter.score.attack]}>{attrLevel[attrAwakeAfter.score.attack]}</span>
                   <span>{"(" + Math.round(attrAwakeAfter.attack) + ")"}</span>
@@ -292,7 +292,7 @@ class Attr extends React.Component {
               :
               <div className="noawake">
                 <div className="not_visible">觉醒后</div>
-                <img className="not_visible" src={"https://yys.res.netease.com/pc/zt/20161108171335/data/before_awake/"+this.props.heroId+".jpg?v4"} alt=""/>
+                <img className="not_visible" src={`${website}/pc/zt/20161108171335/data/before_awake/${this.props.heroId}.jpg?v4`} alt=""/>
                 <p>该式神不能觉醒</p>
               </div>}
             </div>
@@ -336,7 +336,7 @@ class TopBar extends React.Component {
       })(document,window);
 
     /** 调用api接口获取数据 */
-    axios.get("https://yys.clmystes.tech:3300/api02/pc/zt/20161108171335/js/app/all_shishen.json?v70").then((response) => {
+    axios.get(`${domainname}/api02/pc/zt/20161108171335/js/app/all_shishen.json?v70`).then((response) => {
       this.setState({
         heroIdList: response.data
       });
@@ -399,7 +399,7 @@ class TopBar extends React.Component {
     /* 进行img标签的src的更改 */
     for (let i = len; i < img.length; i++) {
       if(img[i].offsetTop <= top){
-        img[i].src = "https://yys.res.netease.com/pc/zt/20161108171335/data/shishen/" + img[i].id + ".png";
+        img[i].src = `${website}/pc/zt/20161108171335/data/shishen/${img[i].id}.png`;
         temp = i;
       }
     }
@@ -457,8 +457,8 @@ class TopBar extends React.Component {
     const activity = this.state.activity;
     const skinChoose = this.state.skinChoose;
     const bigChoose = this.state.bigChoose;
-    const ShishenBigBeforeAwake = "https://yys.res.netease.com/pc/zt/20161108171335/data/shishen_big_beforeAwake/"+heroInfo[0]+".png?v6"
-    const ShishenBigAfterAwake = "https://yys.res.netease.com/pc/zt/20161108171335/data/shishen_big_afterAwake/"+heroInfo[0]+".png?v6"
+    const ShishenBigBeforeAwake = `${website}/pc/zt/20161108171335/data/shishen_big_beforeAwake/${heroInfo[0]}.png?v6`;
+    const ShishenBigAfterAwake = `${website}/pc/zt/20161108171335/data/shishen_big_afterAwake/${heroInfo[0]}.png?v6`;
     return (
       <div className="showall">
         {!heroIdChoose ? 
@@ -534,7 +534,7 @@ class TopBar extends React.Component {
               heroInfo[3].map((item, index) => {
                 return (
                   skinChoose === (index+1) ? 
-                  <img key={item.name} src={"https://yys.res.netease.com/pc/zt/20161108171335/data/shishen_skin/"+heroInfo[0]+"-"+skinChoose+".png"} alt=""/>
+                  <img key={item.name} src={`${website}/pc/zt/20161108171335/data/shishen_skin/${heroInfo[0]}-${skinChoose}.png`} alt=""/>
                   : null
                 )
               }):null}
@@ -566,7 +566,7 @@ class TopBar extends React.Component {
           <div className="changebtn">
             {heroInfo[4] !== 0 ?
             <div className="prevbtn">
-              <img onClick={this.prevHero.bind(this, heroInfo[4])} src={"https://yys.res.netease.com/pc/zt/20161108171335/data/mark_btn/"+(heroIdList[heroInfo[4]-1].id)+".png?v5"} alt=""/>
+              <img onClick={this.prevHero.bind(this, heroInfo[4])} src={`${website}/pc/zt/20161108171335/data/mark_btn/${(heroIdList[heroInfo[4]-1].id)}.png?v5`} alt=""/>
               <div className="btn_text">
                 {heroIdList[heroInfo[4]-1].name}
                 <br></br>上一个
@@ -575,7 +575,7 @@ class TopBar extends React.Component {
               : null}
             {heroInfo[4] !== heroIdList.length-1 ?
             <div className="nextbtn">
-              <img onClick={this.nextHero.bind(this, heroInfo[4])} src={"https://yys.res.netease.com/pc/zt/20161108171335/data/mark_btn/"+(heroIdList[heroInfo[4]+1].id)+".png?v5"} alt=""/>
+              <img onClick={this.nextHero.bind(this, heroInfo[4])} src={`${website}/pc/zt/20161108171335/data/mark_btn/${(heroIdList[heroInfo[4]+1].id)}.png?v5`} alt=""/>
               <div className="btn_text">
                 {heroIdList[heroInfo[4]+1].name}
                 <br></br>下一个
